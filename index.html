@@ -49,11 +49,35 @@
             stroke: none;
         }
 
-        .bg-icon--cross-tl { top: 6%; left: 6%; width: 70px; height: 70px; transform: rotate(-8deg); }
-        .bg-icon--heart-tr { top: 9%; right: 8%; width: 60px; height: 60px; transform: rotate(6deg); }
-        .bg-icon--pulse-br { bottom: 8%; right: 6%; width: 130px; height: 60px; }
-        .bg-icon--cross-bl { bottom: 10%; left: 9%; width: 46px; height: 46px; transform: rotate(12deg); }
-        .bg-icon--crest-mid { top: 42%; left: 4%; width: 56px; height: 56px; transform: rotate(-4deg); }
+        /* All icons live in a strip along the very top or very bottom of
+           the screen (2-6% in from the edge), never in the vertical
+           middle band the card occupies — that's what keeps them clear
+           of the card on phones, where it spans nearly the full width.
+           Horizontal position is free to vary for a scattered look since
+           only the vertical band matters for avoiding the card. */
+        .bg-icon--plus-1   { top: 3%;    left: 5%;   width: 56px;  height: 56px; transform: rotate(-8deg); }
+        .bg-icon--heart-1  { top: 4%;    left: 38%;  width: 34px;  height: 34px; transform: rotate(8deg); }
+        .bg-icon--crest-1  { top: 3%;    right: 30%; width: 40px;  height: 40px; transform: rotate(5deg); }
+        .bg-icon--plus-2   { top: 5%;    right: 5%;  width: 42px;  height: 42px; transform: rotate(10deg); }
+        .bg-icon--pulse-1  { bottom: 4%; left: 4%;   width: 110px; height: 48px; }
+        .bg-icon--heart-2  { bottom: 5%; left: 42%;  width: 32px;  height: 32px; transform: rotate(-6deg); }
+        .bg-icon--crest-2  { bottom: 3%; right: 34%; width: 42px;  height: 42px; transform: rotate(-5deg); }
+        .bg-icon--plus-3   { bottom: 4%; right: 4%;  width: 38px;  height: 38px; transform: rotate(-10deg); }
+
+        /* A few more scattered at mid-height, free to land behind the
+           card on narrow screens — with this many icons around, losing
+           a couple to overlap still leaves plenty visible. */
+        .bg-icon--crest-3  { top: 48%;  left: 3%;   width: 46px;  height: 46px; transform: rotate(-6deg); }
+        .bg-icon--heart-3  { top: 58%;  right: 4%;  width: 30px;  height: 30px; transform: rotate(10deg); }
+        .bg-icon--plus-4   { top: 74%;  left: 8%;   width: 32px;  height: 32px; transform: rotate(14deg); }
+        .bg-icon--pulse-2  { top: 22%;  right: 2%;  width: 90px;  height: 40px; transform: rotate(-4deg); }
+
+        /* Give the icon strips a little more room on short/narrow phones
+           by trimming the photo and card padding slightly. */
+        @media (max-width: 420px), (max-height: 700px) {
+            .photo-frame { width: 190px; height: 285px; }
+            .card { padding: 2rem 2rem 1.5rem; }
+        }
 
         .card {
             background: var(--white);
@@ -96,15 +120,6 @@
             margin-bottom: 0.25rem;
         }
 
-        .credential {
-            font-size: 0.9rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--pink-accent);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
         footer {
             margin-top: 1.75rem;
             font-size: 0.75rem;
@@ -114,34 +129,49 @@
     </style>
 </head>
 <body>
-    <!-- Subtle background accents -->
-    <svg class="bg-icon bg-icon--cross-tl" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
-        <path d="M12 4v16M4 12h16"/>
+    <!-- Reusable subtle background icon shapes -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <symbol id="icon-plus" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
+                <path d="M12 4v16M4 12h16"/>
+            </symbol>
+            <symbol id="icon-heart" viewBox="0 0 24 24">
+                <path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2.3 4.5 6 4.5c2.1 0 3.6 1.2 4.5 2.7 1.4.4 2.4 1.4 2.4 2.7 0-1.3 1-2.3 2.4-2.7.9-1.5 2.4-2.7 4.5-2.7 3.7 0 5.6 3.6 4 7.2C19.5 16.4 12 21 12 21z"/>
+            </symbol>
+            <symbol id="icon-pulse" viewBox="0 0 130 60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="0,30 30,30 40,10 50,50 60,15 68,30 130,30"/>
+            </symbol>
+            <symbol id="icon-crest" viewBox="0 0 24 24" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="4" x2="12" y2="21"/>
+                <path d="M12 5.5 C 9 3.2, 5 3.6, 3.2 6.5"/>
+                <path d="M12 5.5 C 15 3.2, 19 3.6, 20.8 6.5"/>
+                <path d="M7.5 7 C 7.5 9 16.5 9 16.5 11 C 16.5 13 7.5 13 7.5 15 C 7.5 17 16.5 17 16.5 19"/>
+                <path d="M16.5 7 C 16.5 9 7.5 9 7.5 11 C 7.5 13 16.5 13 16.5 15 C 16.5 17 7.5 17 7.5 19"/>
+            </symbol>
+        </defs>
     </svg>
-    <svg class="bg-icon solid bg-icon--heart-tr" viewBox="0 0 24 24">
-        <path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2.3 4.5 6 4.5c2.1 0 3.6 1.2 4.5 2.7 1.4.4 2.4 1.4 2.4 2.7 0-1.3 1-2.3 2.4-2.7.9-1.5 2.4-2.7 4.5-2.7 3.7 0 5.6 3.6 4 7.2C19.5 16.4 12 21 12 21z" transform="scale(0.85) translate(2,2)"/>
-    </svg>
-    <svg class="bg-icon bg-icon--pulse-br" viewBox="0 0 130 60" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="0,30 30,30 40,10 50,50 60,15 68,30 130,30"/>
-    </svg>
-    <svg class="bg-icon bg-icon--cross-bl" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
-        <path d="M12 4v16M4 12h16"/>
-    </svg>
-    <svg class="bg-icon bg-icon--crest-mid" viewBox="0 0 24 24" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="4" x2="12" y2="21"/>
-        <path d="M12 5.5 C 9 3.2, 5 3.6, 3.2 6.5"/>
-        <path d="M12 5.5 C 15 3.2, 19 3.6, 20.8 6.5"/>
-        <path d="M7.5 7 C 7.5 9 16.5 9 16.5 11 C 16.5 13 7.5 13 7.5 15 C 7.5 17 16.5 17 16.5 19"/>
-        <path d="M16.5 7 C 16.5 9 7.5 9 7.5 11 C 7.5 13 16.5 13 16.5 15 C 16.5 17 7.5 17 7.5 19"/>
-    </svg>
+
+    <!-- Scattered subtle background accents — all in the top/bottom
+         strips so they never sit behind the card, on phone or desktop -->
+    <svg class="bg-icon bg-icon--plus-1"><use href="#icon-plus"/></svg>
+    <svg class="bg-icon solid bg-icon--heart-1"><use href="#icon-heart"/></svg>
+    <svg class="bg-icon bg-icon--crest-1"><use href="#icon-crest"/></svg>
+    <svg class="bg-icon bg-icon--plus-2"><use href="#icon-plus"/></svg>
+    <svg class="bg-icon bg-icon--pulse-1"><use href="#icon-pulse"/></svg>
+    <svg class="bg-icon solid bg-icon--heart-2"><use href="#icon-heart"/></svg>
+    <svg class="bg-icon bg-icon--crest-2"><use href="#icon-crest"/></svg>
+    <svg class="bg-icon bg-icon--plus-3"><use href="#icon-plus"/></svg>
+    <svg class="bg-icon bg-icon--crest-3"><use href="#icon-crest"/></svg>
+    <svg class="bg-icon solid bg-icon--heart-3"><use href="#icon-heart"/></svg>
+    <svg class="bg-icon bg-icon--plus-4"><use href="#icon-plus"/></svg>
+    <svg class="bg-icon bg-icon--pulse-2"><use href="#icon-pulse"/></svg>
 
     <div class="card">
         <div class="photo-frame">
             <img src="photo.jpg" alt="Isabella Reyes, RN">
         </div>
-        <div class="credential">Registered Nurse</div>
         <h1>Isabella Reyes, RN</h1>
-        <footer>&copy; 2026 Isabella Reyes, RN</footer>
+        <footer>&copy; 2026 Isabella Reyes</footer>
     </div>
 </body>
 </html>
