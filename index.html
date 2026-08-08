@@ -53,6 +53,7 @@
         .bg-icon--heart-tr { top: 9%; right: 8%; width: 60px; height: 60px; transform: rotate(6deg); }
         .bg-icon--pulse-br { bottom: 8%; right: 6%; width: 130px; height: 60px; }
         .bg-icon--cross-bl { bottom: 10%; left: 9%; width: 46px; height: 46px; transform: rotate(12deg); }
+        .bg-icon--crest-mid { top: 42%; left: 4%; width: 56px; height: 56px; transform: rotate(-4deg); }
 
         .card {
             background: var(--white);
@@ -67,8 +68,11 @@
         }
 
         .photo-frame {
-            width: 220px;
-            height: 300px;
+            /* Sized to match the source photo's exact aspect ratio (460:690)
+               so nothing gets cropped by object-fit — the whole frame,
+               banner included, is always fully visible. */
+            width: 230px;
+            height: 345px;
             border-radius: 16px;
             background: var(--pink-mid);
             margin: 0 auto 1.5rem;
@@ -82,8 +86,7 @@
         .photo-frame img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center top;
+            object-fit: contain;
         }
 
         h1 {
@@ -123,6 +126,13 @@
     </svg>
     <svg class="bg-icon bg-icon--cross-bl" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
         <path d="M12 4v16M4 12h16"/>
+    </svg>
+    <svg class="bg-icon bg-icon--crest-mid" viewBox="0 0 24 24" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="4" x2="12" y2="21"/>
+        <path d="M12 5.5 C 9 3.2, 5 3.6, 3.2 6.5"/>
+        <path d="M12 5.5 C 15 3.2, 19 3.6, 20.8 6.5"/>
+        <path d="M7.5 7 C 7.5 9 16.5 9 16.5 11 C 16.5 13 7.5 13 7.5 15 C 7.5 17 16.5 17 16.5 19"/>
+        <path d="M16.5 7 C 16.5 9 7.5 9 7.5 11 C 7.5 13 16.5 13 16.5 15 C 16.5 17 7.5 17 7.5 19"/>
     </svg>
 
     <div class="card">
